@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnmixMtxOptimizer</title>
+    <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+    
+    
+
+
+    <div class="basic-div">
+        <h1>Unmixing Matrix Drager</h1>
+        <p>(demo version)</p>
+        <p>This website is designed to ... </p>
+        
+    </div>
+    <!-- Step 1 Inital setting and Import files -->
+    <!-- Select  Data Folder and UnmixMatrix CSV file -->
+    <div class="basic-div">
+        <div>
+            <h2>Step 1 Setup</h2>
+            <p>Select a data folder where you keep fcs files</p>
+            <button id="select-folder">Select Data Folder</button>
+            <p id="folder-name" class = "small-gray-text"></p>
+            <p>Select a UnmixMatrix File</p>
+            <input type="file" id="file-input" >
+            <p id="file-name" class = "small-gray-text"></p>
+            <!-- Read UnmixMatrix CSV file -->
+            <button id="read-csv">Read the UnmixMatrix CSV</button>
+        </div>
+        <div class = "table-container">
+            <div id="csv-table"></div>
+        </div>
+        
+        <div>
+            <p id="file-dropdown-select-alert" style="display:none;">Please select fcs file</p>
+            <!-- Select fcs file -->
+            <select id="file-dropdown" style="display:none;"></select>
+            <p id="file-dropdown-name" class = "small-gray-text"></p>
+            <!-- Select subset method -->
+            <div id="subset-method-selection" style="display:none;">
+                <div>
+                    <label>
+                        <input type="radio" name="subset-method" value="random" checked> Random Subset
+                    </label>
+                </div>
+                <div>
+                    <p id="subset-size-reminder" >Enter subset size: </p>
+                    <input type="number" id="subset-size" value="20000" step="1" >
+                </div>
+            </div>
+            <!-- Read fcs file and do unmixnig -->
+            <button id="run-button" style="display:none;">Read fcs file</button>
+            <div id="file-reading-reminder-div" style="display:none;">
+                <p id="file-reading-reminder">Please wait while reading and processing... </p>
+                <p id="file-reading-reminder-progress"></p>
+            </div>
+            
+            <div id="file-reading-worrying-div" style="display:none;">
+                <p id="file-reading-worrying1"></p>
+                <p id="file-reading-worrying2"></p>
+                <p id="file-reading-worrying3"></p>
+                <p id="file-reading-worrying4"></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Step 2 Select positive and negative population -->
+    <div class="basic-div">
+        <h2>Step 2 Set Anchar</h2>
+        <button id="find-lefsig-button" style="display:none;">Set Anchar</button>
+        <!-- Select cell numbers for scatter plot -->
+        <p id="plotset-size-input-reminder" style="display:none;"></p>
+        <input type="number" id="plotset-size-input" placeholder="Enter Plotset size" style="display:none;">
+        <!-- Select x and y axes -->
+        <p id="x-dropdown-select-reminder" style="display:none;">Select x axis</p>
+        <select id="x-dropdown" style="display:none;"></select>
+        <p id="y-dropdown-select-reminder" style="display:none;">Select y axis</p>
+        <select id="y-dropdown" style="display:none;"></select>
+        <!-- Create Scatter plot -->
+        <button id="plot-button" style="display:none;">Create Scatter plot</button>
+        <button id="replot-button" style="display:none;">Re-plot with selected cells</button>
+        <p id="plot-reminder" style="display:none;"></p>
+        <div id="original-plot" class="plot-div" style="display:none;"></div>
+        <p id="selected-reminder" style="display:none;" ></p>
+        <!-- Select population and set drag trace -->
+        <div id="drager-bottons-div" style="display:none;">
+            <div id="ploygon-info-div"></div>
+            <div>
+                <label>Mode: </label>
+                <label><input type="radio" name="mode" value="draw" checked> Draw </label>
+                <label><input type="radio" name="mode" value="drag"> Drag </label>
+            </div>
+            <div id="shape-selector-div">
+            </div>
+            
+            <div id="drag-instruct-div">
+                <ol>
+                    <li>In <strong>Draw</strong> mode, left-click to draw a polygon, and middle-click (scroll wheel) to close the polygon.</li>
+                    <li>In <strong>Drag</strong> mode, select a polygon and drag it directly on the plot.</li>
+                </ol>
+            </div>
+
+        </div>
+        
+    </div>
+    
+    <!-- Step 3 Correction -->
+    <div class="basic-div">
+        <h2>Step 3 Correct unmixing matrix</h2>
+        <!-- Calculate Leftsig -->
+        <button id="calculation-button" style="display:none;">Correct when you are ready!</button>
+        <p id="calculation-button-reminder" style="display:none;" class = "small-gray-text"></p>
+
+        <!-- Correct positive signature -->
+        <div id="input-container" style="display: none;">
+            <label for="correct-factor-input">Enter Correct Factor:</label>
+            <input type="number" id="correct-factor-input" step="0.0001">
+            <button id="submit-factor-button">Submit</button>
+        </div>
+        <!-- Display corrected results -->
+        <p id="corrected-x-dropdown-select-reminder" style="display:none;">Select x axis</p>
+        <select id="corrected-x-dropdown" style="display:none;"></select>
+        <p id="corrected-y-dropdown-select-reminder" style="display:none;">Select y axis</p>
+        <select id="corrected-y-dropdown" style="display:none;"></select>
+
+        <button id="corrected-plot-button" style="display:none;">Create Corrected Scatter plot</button>
+        <button id="corrected-replot-button" style="display:none;">Re-plot with selected cells</button>
+        <p id="corrected-plot-reminder" style="display:none;"></p>
+        <div id="corrected-plot"></div>
+        <p id="corrected-selected-reminder" style="display:none;"></p>
+        <div id="plotly-linechart"></div>
+    </div>
+
+    <!-- Step 4 Save corrected Unmixing matrix -->
+    <div class="basic-div">
+        <h2>Step 4 Save corrected Unmixing matrix</h2>
+        <div class = "table-container">
+            <div id="csv-table-optimized" style="display: none;"></div>
+        </div>
+        <button id="copy-button">Copy Table</button>
+        <p id="copy-button-reminder"></p>
+        <button id="save-button" style="display: none;">Save Corrected Unmixing matrix</button>
+        <button id="export-log-button" style="display: none;">Save log</button>
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <footer>
+        <p>&copy; 2025 XiangmingCai. All rights reserved.</p>
+    </footer>
+    <script src="dist/bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    
+</body>
+</html>
