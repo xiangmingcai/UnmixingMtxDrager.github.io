@@ -7,15 +7,13 @@
     <link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
-    
-    
-
-
     <div class="basic-div">
         <h1>Unmixing Matrix Drager</h1>
-        <p>(demo version)</p>
-        <p>This website is designed to ... </p>
-        
+        <p>(version 1.0)</p>
+        <p>This website is designed to correct unmixing matrix by draging anchors interactively. </p>
+        <p>If you find this tool helpful, please remember to cite us in your work. <a href="https://github.com/xiangmingcai/UnmixingDrager.github.io" target="_blank">View this project on GitHub</a></p>
+        <p>🔍<a href="https://github.com/xiangmingcai/UnmixingDrager.github.io/blob/main/instruction.md" target="_blank">instruction document</a> </p>
+        <p>Enjoy! 😉</p>
     </div>
     <!-- Step 1 Inital setting and Import files -->
     <!-- Select  Data Folder and UnmixMatrix CSV file -->
@@ -70,8 +68,8 @@
     
     <!-- Step 2 Select positive and negative population -->
     <div class="basic-div">
-        <h2>Step 2 Set Anchar</h2>
-        <button id="find-lefsig-button" style="display:none;">Set Anchar</button>
+        <h2>Step 2 Set Anchor</h2>
+        <button id="set-anchor-button" style="display:none;">Set Anchors</button>
         <!-- Select cell numbers for scatter plot -->
         <p id="plotset-size-input-reminder" style="display:none;"></p>
         <input type="number" id="plotset-size-input" placeholder="Enter Plotset size" style="display:none;">
@@ -101,6 +99,8 @@
                 <ol>
                     <li>In <strong>Draw</strong> mode, left-click to draw a polygon, and middle-click (scroll wheel) to close the polygon.</li>
                     <li>In <strong>Drag</strong> mode, select a polygon and drag it directly on the plot.</li>
+                    <li>Bins should be larger than point counts in the shape.</li>
+                    <li>After you're done dragging a shape, switch back to 'Draw' mode to avoid unintentional drag.</li>
                 </ol>
             </div>
 
@@ -114,13 +114,11 @@
         <!-- Calculate Leftsig -->
         <button id="calculation-button" style="display:none;">Correct when you are ready!</button>
         <p id="calculation-button-reminder" style="display:none;" class = "small-gray-text"></p>
+        <p id="calculation-button-reminder1" style="display:none;" class = "small-gray-text"></p>
+        <p id="calculation-button-reminder2" style="display:none;" class = "small-gray-text"></p>
+        
+        <button id="submit-factor-button" style="display:none;">Submit</button>
 
-        <!-- Correct positive signature -->
-        <div id="input-container" style="display: none;">
-            <label for="correct-factor-input">Enter Correct Factor:</label>
-            <input type="number" id="correct-factor-input" step="0.0001">
-            <button id="submit-factor-button">Submit</button>
-        </div>
         <!-- Display corrected results -->
         <p id="corrected-x-dropdown-select-reminder" style="display:none;">Select x axis</p>
         <select id="corrected-x-dropdown" style="display:none;"></select>
